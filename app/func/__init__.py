@@ -1,0 +1,1 @@
+from .edit_photo import edit_photo
