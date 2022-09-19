@@ -3,7 +3,7 @@ from aiogram import types
 from aiogram import Bot, Dispatcher
 
 from config import settings
-from app.handlers import router
+from handlers import router
 
 
 async def set_default_commands(bot: Bot):
