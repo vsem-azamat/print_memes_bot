@@ -1,0 +1,1 @@
+from .text import text_instruction, text_about_meme
