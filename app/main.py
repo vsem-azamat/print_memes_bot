@@ -8,8 +8,8 @@ from app.handlers import router
 
 async def set_default_commands(bot: Bot):
     await bot.set_my_commands([
-        types.BotCommand("старт",  "Старт"),
-        types.BotCommand("хелп", "Инструкция")
+        types.BotCommand("meme",  "Сделать мем"),
+        types.BotCommand("helpmeme", "Инструкция")
     ])
 
 async def on_startup(bot: Bot) -> None:

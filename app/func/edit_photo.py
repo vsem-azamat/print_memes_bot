@@ -24,7 +24,12 @@ class TextFormatter:
         return '\n'.join(lines)
 
 
-async def edit_photo(io_image: io.BytesIO, text_up: str|None, text_down: str|None) -> io.BytesIO:
+async def edit_photo(io_image: io.BytesIO,
+                     text_up: str = None, text_down: str = None,
+                     selected_font: str = None) -> io.BytesIO:
+    """
+    The function insert a caption into an image.
+    """
     im = Image.open(io.BytesIO(io_image.getbuffer().tobytes()))
     draw_text = ImageDraw.ImageDraw(im)
 
@@ -32,12 +37,15 @@ async def edit_photo(io_image: io.BytesIO, text_up: str|None, text_down: str|Non
     W_text = int(W_image / 10)
     text_size = int(H_image / 15)
     stroke_width = int(text_size / 10)
-    font = ImageFont.truetype('./app/utils/Arial.ttf', size=text_size, encoding='UTF-8')
+    font_name = {
+        "A": "Arial",
+        "F": "Fixedsys",
+        "L": "Lobster"
+    }.get(selected_font, "Arial")
+    font = ImageFont.truetype(f'./app/utils/{font_name}.ttf', size=text_size, encoding='UTF-8')
 
     # UP
-
     if text_up:
-        print(text_up)
         text_up = TextFormatter.lines_formatter(text_up.strip(), W_text).strip()
         text_up_length, _ = font.getsize(text_up.split('\n')[0])
         while text_up_length >= W_image * 0.9:
@@ -59,7 +67,6 @@ async def edit_photo(io_image: io.BytesIO, text_up: str|None, text_down: str|Non
         )
 
     # DOWN
-
     if text_down:
         text_down = TextFormatter.lines_formatter(text_down.split('\n')[0], W_text).strip()
         text_down_length, _ = font.getsize(text_up.split('\n')[0])
@@ -84,5 +91,4 @@ async def edit_photo(io_image: io.BytesIO, text_up: str|None, text_down: str|Non
 
     output = io.BytesIO()
     im.save(output, format="PNG")
-    return  output
-
+    return output
