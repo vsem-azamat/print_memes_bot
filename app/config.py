@@ -1,14 +1,12 @@
-from bestconfig import Config
-from pydantic import BaseSettings, SecretStr
+import os
+from dotenv import load_dotenv
+from dataclasses import dataclass
 
-config = Config()
+load_dotenv()
 
-class Settings(BaseSettings):
-    bot_token: SecretStr = config['BOT_TOKEN']
-    admins: list[int] = config['ADMINS']
+@dataclass
+class Settings:
+    BOT_TOKEN = str(os.getenv('BOT_TOKEN'))
+    ADMINS = [int(id_admin) for id_admin in os.getenv('ADMINS').split(',')]
 
-    class Config:
-        env_file = '../.env'
-        env_file_encoding = 'utf-8'
-
-settings = Settings()
+settings = Settings

@@ -23,7 +23,7 @@ async def on_shutdown(bot: Bot) -> None:
 
 # Run bot
 async def main() -> None:
-    bot = Bot(token=settings.bot_token.get_secret_value(), parse_mode="HTML")
+    bot = Bot(token=settings.BOT_TOKEN, parse_mode="HTML")
     dp = Dispatcher()
 
     dp.include_router(router)
